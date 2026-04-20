@@ -1,4 +1,5 @@
 "use strict";
+
 const canvas = document.getElementById('canvas'),
     context = canvas.getContext('2d'),
     chakana = 321756043315785n,
@@ -8,6 +9,7 @@ const canvas = document.getElementById('canvas'),
     colorSelect = '#f00';
 
 var box;
+var match = {};
 
 function draw() {
     resize();

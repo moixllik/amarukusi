@@ -3,7 +3,8 @@
 pkgs.mkShell {
     # Herramientas
     nativeBuildInputs = with pkgs; [
-        python3
+        typst typstyle tinymist # typst
+        python3 # python3 -m http.server
     ];
     # Librerías
     buildInputs = with pkgs; [
