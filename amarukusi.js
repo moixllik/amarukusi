@@ -9,7 +9,27 @@ const canvas = document.getElementById('canvas'),
     colorSelect = '#f00';
 
 var box;
-var match = {};
+var selection = {
+    position: {
+        x: -1,
+        y: -1
+    }
+};
+var match = {
+    player: 0,
+    sun: {
+        time: 12 * 60 * 1000,
+        pieces: 7,
+        kos: 0,
+        kills: 0,
+    },
+    moon: {
+        time: 11 * 60 * 1000,
+        pieces: 7,
+        kos: 0,
+        kills: 0,
+    }
+};
 
 function draw() {
     resize();
@@ -44,7 +64,7 @@ function drawBoard() {
         context.fillRect(x * box, y * box, box, box);
     }
 
-    'ABCDEFG'.split('').forEach((x, i) => {
+    'abcdefg'.split('').forEach((x, i) => {
         drawText(i + 1, 0.4, 0.15, colorText, x);
         drawText(7 - i, 7.65, 0.15, colorText, x);
 
@@ -57,15 +77,29 @@ function drawPlayers() {
     drawPiece(0, 0, 0, colorText);
     drawPiece(8, 8, 0, colorText);
 
+    // Sun
     drawText(6.5, 0, 0.5, colorText, '12:00');
-    drawText(1, 0, 0.5, colorText, '07');
-    drawText(0, 1, 0.5, colorText, '00');
-    drawText(0, 2, 0.5, colorText, '00');
+    drawText(1, 0, 0.5, colorText,
+        match.sun.pieces.toString().padStart(2, '0')
+    );
+    drawText(0, 1, 0.5, colorText,
+        match.sun.kos.toString().padStart(2, '0')
+    );
+    drawText(0, 2, 0.5, colorText,
+        match.sun.kills.toString().padStart(2, '0')
+    );
 
+    // Moon
     drawText(1.5, 8, 0.5, colorText, '12:00');
-    drawText(7, 8, 0.5, colorText, '07');
-    drawText(8, 6, 0.5, colorText, '00');
-    drawText(8, 7, 0.5, colorText, '00');
+    drawText(7, 8, 0.5, colorText,
+        match.moon.pieces.toString().padStart(2, '0')
+    );
+    drawText(8, 7, 0.5, colorText,
+        match.moon.kos.toString().padStart(2, '0')
+    );
+    drawText(8, 6, 0.5, colorText,
+        match.moon.kills.toString().padStart(2, '0')
+    );
 }
 
 function drawText(x, y, size, fill, text) {
@@ -93,6 +127,38 @@ function drawPiece(x, y, position, fill) {
     context.stroke();
     context.fill('evenodd');
 }
+
+function update(event) {
+    const rect = canvas.getBoundingClientRect();
+    const mouseX = (event.clientX - rect.left) * (canvas.width / rect.width);
+    const mouseY = (event.clientY - rect.top) * (canvas.height / rect.height);
+    const x = Math.floor(mouseX / box);
+    const y = Math.floor(mouseY / box);
+
+    switch (event.type) {
+        case 'pointermove':
+            selection.position.x = x;
+            selection.position.y = y;
+            draw();
+            break;
+
+        case 'pointerup':
+            break;
+
+        case 'pointerdown':
+            break;
+
+        case 'pointerleave':
+            break;
+
+        default:
+    }
+}
+
+window.onpointerup = update;
+window.onpointerdown = update;
+window.onpointermove = update;
+window.onpointerleave = update;
 
 window.onresize = draw;
 draw();

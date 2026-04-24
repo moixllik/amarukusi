@@ -4,7 +4,7 @@
 #align(center)[
   #title()
   #linebreak()
-  _Versión del 22 de noviembre del 2025._
+  _Versión del 24 de abril del 2026._
 ]
 
 #outline()
@@ -131,31 +131,31 @@ Se recomienda seguir el reglamento para las partidas no competitivas.
 
 7.1. Desde la perspectiva del jugador Sol, el tablero tiene 4 sectores de 12 casillas y un sector de una casilla.
 
-7.1.1. Primer sector, desde "a0" hasta "d2".
+7.1.1. Primer sector, desde "a1" hasta "d3".
 
-7.1.2. Segundo sector, desde "e0" hasta "g3".
+7.1.2. Segundo sector, desde "e1" hasta "g4".
 
-7.1.3. Tercer sector, desde "g4" hasta "d6".
+7.1.3. Tercer sector, desde "g5" hasta "d7".
 
-7.1.4. Cuarto sector, desde "c6" hasta "a3".
+7.1.4. Cuarto sector, desde "c7" hasta "a4".
 
-7.1.5. Sector de gobierno es en "d3".
+7.1.5. Sector de gobierno es en "d4".
 
 7.2. Las casillas en el perímetro del tablero se le conoce como frontera.
 
-7.2.1. Las casillas oscuras en las esquinas (a0, a6, g0 y g6) representan al territorio exterior o islas.
+7.2.1. Las casillas oscuras en las esquinas (a1, a7, g1 y g7) representan al territorio exterior o islas.
 
-7.2.2. Las casillas oscuras en medio (a3, d0, d6 y g3) representan a la frontera continental.
+7.2.2. Las casillas oscuras en medio (a4, d1, d7 y g4) representan a la frontera continental.
 
 7.3. Casillas del territorio continental.
 
-7.3.1. Casilla del sector de gobierno: d3.
+7.3.1. Casilla del sector de gobierno: d4.
 
-7.3.2. Casillas de la costa, oscuras: a3, d0, d6 y g3.
+7.3.2. Casillas de la costa, oscuras: a4, d1, d7 y g4.
 
-7.3.3. Casillas de la selva, oscuras: b2, b4, c1, c5, e1, e5, f2 y f4; claras: b3, d1, d5 y f3.
+7.3.3. Casillas de la selva, oscuras: b3, b5, c2, c6, e2, e6, f3 y f5; claras: b4, d2, d6 y f4.
 
-7.3.4. Casillas de la sierra, oscuras: c3, d2, d4 y e3; claras: c2, c4, e2 y e4.
+7.3.4. Casillas de la sierra, oscuras: c4, d3, d5 y e4; claras: c3, c5, e3 y e5.
 
 7.4. Las casillas que no son territorio representan al océano.
 
