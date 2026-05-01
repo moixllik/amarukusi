@@ -4,16 +4,17 @@ const canvas = document.getElementById('canvas'),
     context = canvas.getContext('2d'),
     chakana = 321756043315785n,
     colorText = '#000',
+    colorBody = '#fff',
     colorSun = '#00f',
     colorMoon = '#0f0',
-    colorSelect = '#f00';
+    colorSelection = '#f00';
 
 var box;
 var selection = {
-    position: {
-        x: -1,
-        y: -1
-    }
+    x: -1,
+    y: -1,
+    w: 1,
+    h: 1
 };
 var match = {
     player: 0,
@@ -21,13 +22,13 @@ var match = {
         time: 12 * 60 * 1000,
         pieces: 7,
         kos: 0,
-        kills: 0,
+        kills: 0
     },
     moon: {
         time: 11 * 60 * 1000,
         pieces: 7,
         kos: 0,
-        kills: 0,
+        kills: 0
     }
 };
 
@@ -35,6 +36,15 @@ function draw() {
     resize();
 
     drawBoard();
+
+    if (selection.x > -1 && selection.y > -1) {
+        drawSelection(
+            selection.x,
+            selection.y,
+            selection.w,
+            selection.h
+        );
+    }
 
     drawPlayers();
 }
@@ -57,11 +67,17 @@ function drawBoard() {
         const x = Math.floor(i / 7) + 1, y = Math.floor(i % 7) + 1;
 
         if ((chakana & (1n << BigInt(i))) !== 0n) {
-            context.fillStyle = '#000';
+            context.fillStyle = colorText;
         } else {
-            context.fillStyle = '#fff';
+            context.fillStyle = colorBody;
         }
-        context.fillRect(x * box, y * box, box, box);
+
+        context.fillRect(
+            box * x,
+            box * y,
+            box,
+            box
+        );
     }
 
     'abcdefg'.split('').forEach((x, i) => {
@@ -71,6 +87,18 @@ function drawBoard() {
         drawText(0.4, i + 1, 0.15, colorText, i + 1);
         drawText(7.6, i + 1, 0.15, colorText, 7 - i);
     });
+}
+
+function drawSelection(x, y, w, h) {
+    context.strokeStyle = colorSelection;
+    context.lineWidth = box * 0.03;
+
+    context.strokeRect(
+        box * x,
+        box * y,
+        box * w,
+        box * h
+    );
 }
 
 function drawPlayers() {
@@ -104,25 +132,41 @@ function drawPlayers() {
 
 function drawText(x, y, size, fill, text) {
     context.fillStyle = fill;
+
     context.textAlign = 'center';
     context.textBaseline = 'middle';
-    context.font = (size * box) + 'px monospace';
-    context.fillText(text, (x + 0.5) * box, (y + 0.5) * box);
+
+    context.font = (box * size) + 'px monospace';
+
+    context.fillText(
+        text,
+        box * (x + 0.5),
+        box * (y + 0.5)
+    );
 }
 
 function drawPiece(x, y, position, fill) {
     const hole = [[0, -0.25], [-0.25, 0], [0, 0.25], [0.25, 0]][position];
 
     context.beginPath();
+
     context.fillStyle = fill;
-    context.strokeStyle = '#000';
+
+    context.strokeStyle = colorText;
     context.arc(
-        (x + 0.5) * box, (y + 0.5) * box,
-        0.45 * box, 0, Math.PI * 2, false
+        box * (x + 0.5),
+        box * (y + 0.5),
+        box * 0.45, 0,
+        Math.PI * 2,
+        false
     );
     context.arc(
-        (x + 0.5 + hole[0]) * box, (y + 0.5 + hole[1]) * box,
-        0.15 * box, 0, Math.PI * 2, false
+        box * (x + 0.5 + hole[0]),
+        box * (y + 0.5 + hole[1]),
+        box * 0.15,
+        0,
+        Math.PI * 2,
+        false
     );
     context.stroke();
     context.fill('evenodd');
@@ -137,18 +181,24 @@ function update(event) {
 
     switch (event.type) {
         case 'pointermove':
-            selection.position.x = x;
-            selection.position.y = y;
-            draw();
-            break;
+            selection.x = x;
+            selection.y = y;
 
-        case 'pointerup':
+            draw();
             break;
 
         case 'pointerdown':
             break;
 
+        case 'pointerup':
+            break;
+
+
         case 'pointerleave':
+            selection.x = -1;
+            selection.y = -1;
+
+            draw();
             break;
 
         default:
