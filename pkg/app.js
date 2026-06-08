@@ -111,6 +111,46 @@ export class Game {
         }
     }
     /**
+     * @returns {number}
+     */
+    player_active_get() {
+        const ret = wasm.game_player_active_get(this.__wbg_ptr);
+        if (ret[2]) {
+            throw takeFromExternrefTable0(ret[1]);
+        }
+        return ret[0] >>> 0;
+    }
+    /**
+     * @param {number} player
+     */
+    player_active_set(player) {
+        const ret = wasm.game_player_active_set(this.__wbg_ptr, player);
+        if (ret[1]) {
+            throw takeFromExternrefTable0(ret[0]);
+        }
+    }
+    /**
+     * @param {number} player
+     * @returns {number}
+     */
+    player_kills_get(player) {
+        const ret = wasm.game_player_kills_get(this.__wbg_ptr, player);
+        if (ret[2]) {
+            throw takeFromExternrefTable0(ret[1]);
+        }
+        return ret[0] >>> 0;
+    }
+    /**
+     * @param {number} player
+     * @param {number} kills
+     */
+    player_kills_set(player, kills) {
+        const ret = wasm.game_player_kills_set(this.__wbg_ptr, player, kills);
+        if (ret[1]) {
+            throw takeFromExternrefTable0(ret[0]);
+        }
+    }
+    /**
      * @param {number} player
      * @returns {string}
      */
@@ -124,6 +164,27 @@ export class Game {
             return getStringFromWasm0(ret[0], ret[1]);
         } finally {
             wasm.__wbindgen_free(deferred1_0, deferred1_1, 1);
+        }
+    }
+    /**
+     * @param {number} player
+     * @returns {number}
+     */
+    player_pieces_get(player) {
+        const ret = wasm.game_player_pieces_get(this.__wbg_ptr, player);
+        if (ret[2]) {
+            throw takeFromExternrefTable0(ret[1]);
+        }
+        return ret[0] >>> 0;
+    }
+    /**
+     * @param {number} player
+     * @param {number} pieces
+     */
+    player_pieces_set(player, pieces) {
+        const ret = wasm.game_player_pieces_set(this.__wbg_ptr, player, pieces);
+        if (ret[1]) {
+            throw takeFromExternrefTable0(ret[0]);
         }
     }
 }
@@ -235,6 +296,13 @@ function __wbg_get_imports() {
         __wbg_localStorage_e3f4a792bb36c514: function() { return handleError(function (arg0) {
             const ret = arg0.localStorage;
             return isLikeNone(ret) ? 0 : addToExternrefTable0(ret);
+        }, arguments); },
+        __wbg_prompt_ae2b909ea3821338: function() { return handleError(function (arg0, arg1, arg2, arg3, arg4, arg5) {
+            const ret = arg1.prompt(getStringFromWasm0(arg2, arg3), getStringFromWasm0(arg4, arg5));
+            var ptr1 = isLikeNone(ret) ? 0 : passStringToWasm0(ret, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+            var len1 = WASM_VECTOR_LEN;
+            getDataViewMemory0().setInt32(arg0 + 4 * 1, len1, true);
+            getDataViewMemory0().setInt32(arg0 + 4 * 0, ptr1, true);
         }, arguments); },
         __wbg_setItem_caab843cd6845dbb: function() { return handleError(function (arg0, arg1, arg2, arg3, arg4) {
             arg0.setItem(getStringFromWasm0(arg1, arg2), getStringFromWasm0(arg3, arg4));

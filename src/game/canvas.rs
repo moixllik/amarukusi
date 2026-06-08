@@ -5,7 +5,7 @@ use wasm_bindgen::prelude::*;
 #[wasm_bindgen]
 impl Game {
     pub fn canvas_resize(&mut self) -> Result<(), JsValue> {
-        let window = web_sys::window().expect("Window");
+        let window = web_sys::window().expect("Error: Window");
         let width = window.inner_width()?.as_f64().unwrap();
         let height = window.inner_height()?.as_f64().unwrap();
 
@@ -27,21 +27,49 @@ impl Game {
         // Board
         self.board_draw()?;
 
-        // Piece Sun
-        let state_sun = self.piece_state_get(1)?;
+        // Player
+        let player = self.player_active_get()?;
 
-        self.piece_draw(8.0, 8.0, "white", state_sun)?;
-        self.board_text(&STATE_SUN[state_sun], 8.5, 8.5, "black", 0.20)?;
+        match player {
+            1 => {
+                self.piece_draw(3.0, 8.0, "white", 0)?;
+                self.piece_draw(4.0, 0.0, "black", 0)?;
+            }
+            2 => {
+                self.piece_draw(4.0, 8.0, "white", 0)?;
+                self.piece_draw(5.0, 0.0, "black", 0)?;
+            }
+            _ => {
+                self.piece_draw(4.0, 8.0, "white", 0)?;
+                self.piece_draw(4.0, 0.0, "black", 0)?;
+            }
+        }
 
-        self.piece_draw(4.0, 8.0, "white", 0)?;
+        // Sun Piece
+        let sun_state = self.piece_state_get(1)?;
 
-        // Piece Moon
-        let state_moon = self.piece_state_get(2)?;
+        self.piece_draw(8.0, 8.0, "white", sun_state)?;
+        self.board_text(&STATE_SUN[sun_state], 8.5, 8.5, "black", 0.20)?;
 
-        self.piece_draw(0.0, 0.0, "black", state_moon)?;
-        self.board_text(&STATE_MOON[state_moon], 0.5, 0.5, "white", 0.20)?;
+        // Moon Piece
+        let moon_state = self.piece_state_get(2)?;
 
-        self.piece_draw(4.0, 0.0, "black", 0)?;
+        self.piece_draw(0.0, 0.0, "black", moon_state)?;
+        self.board_text(&STATE_MOON[moon_state], 0.5, 0.5, "white", 0.20)?;
+
+        // Sun Information
+        let sun_kills = self.player_kills_get(1)?;
+        let sun_pieces = self.player_pieces_get(1)?;
+
+        self.board_text(&sun_kills.to_string(), 8.5, 7.5, "black", 0.7)?; // Kills
+        self.board_text(&sun_pieces.to_string(), 7.5, 8.5, "white", 0.7)?; // Pieces
+
+        // Moon Information
+        let moon_kills = self.player_kills_get(2)?;
+        let moon_pieces = self.player_pieces_get(2)?;
+
+        self.board_text(&moon_kills.to_string(), 0.5, 1.5, "white", 0.7)?; // Kills
+        self.board_text(&moon_pieces.to_string(), 1.5, 0.5, "black", 0.7)?; // Pieces
 
         Ok(())
     }

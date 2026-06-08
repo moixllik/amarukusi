@@ -103,14 +103,67 @@ impl Game {
                     self.canvas_draw()?;
                 }
 
-                (8, 4) => {
-                    // TODO: active sol
+                // Activar como jugador sol
+                (4, 8) => {
+                    self.player_active_set(1)?;
+
+                    self.canvas_draw()?;
                 }
 
-                (0, 4) => {
-                    // TODO: active luna
+                // Activar como jugador luna
+                (4, 0) => {
+                    self.player_active_set(2)?;
+
+                    self.canvas_draw()?;
                 }
 
+                // Cambiar número de piezas sol
+                (7, 8) => {
+                    if let Some(pieces) = web_sys::window()
+                        .unwrap()
+                        .prompt_with_message_and_default("Piezas", "")?
+                    {
+                        self.player_pieces_set(1, pieces.parse().unwrap_or(7))?;
+
+                        self.canvas_draw()?;
+                    }
+                }
+
+                // Cambiar número de piezas luna
+                (1, 0) => {
+                    if let Some(pieces) = web_sys::window()
+                        .unwrap()
+                        .prompt_with_message_and_default("Piezas", "")?
+                    {
+                        self.player_pieces_set(2, pieces.parse().unwrap_or(7))?;
+
+                        self.canvas_draw()?;
+                    }
+                }
+
+                // Cambiar número de muertes sol
+                (8, 7) => {
+                    if let Some(kills) = web_sys::window()
+                        .unwrap()
+                        .prompt_with_message_and_default("Muertes", "")?
+                    {
+                        self.player_kills_set(1, kills.parse().unwrap_or(0))?;
+
+                        self.canvas_draw()?;
+                    }
+                }
+
+                // Cambiar número de muertes luna
+                (0, 1) => {
+                    if let Some(kills) = web_sys::window()
+                        .unwrap()
+                        .prompt_with_message_and_default("Muertes", "")?
+                    {
+                        self.player_kills_set(2, kills.parse().unwrap_or(0))?;
+
+                        self.canvas_draw()?;
+                    }
+                }
                 _ => {}
             },
             "pointerleave" => {}
