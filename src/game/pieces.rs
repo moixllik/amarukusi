@@ -13,6 +13,8 @@ impl Game {
 
         self.context.begin_path();
         self.context.set_fill_style_str(color);
+        self.context.set_stroke_style_str("black");
+
         self.context.arc(
             (x + 0.5) * size,
             (y + 0.5) * size,
@@ -20,15 +22,20 @@ impl Game {
             0.0,
             2.0 * std::f64::consts::PI,
         )?;
-        self.context.arc(
-            (x + 0.5 + hole[0]) * size,
-            (y + 0.5 + hole[1]) * size,
-            piece_radius * 0.25,
-            0.0,
-            2.0 * std::f64::consts::PI,
-        )?;
+
+        let hole_x = (x + 0.5 + hole[0]) * size;
+        let hole_y = (y + 0.5 + hole[1]) * size;
+        let hole_radius = piece_radius * 0.25;
+
+        self.context.move_to(hole_x + hole_radius, hole_y);
+
+        self.context
+            .arc(hole_x, hole_y, hole_radius, 0.0, 2.0 * std::f64::consts::PI)?;
+
         self.context
             .fill_with_canvas_winding_rule(web_sys::CanvasWindingRule::Evenodd);
+
+        self.context.stroke();
 
         Ok(())
     }

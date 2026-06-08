@@ -71,6 +71,23 @@ impl Game {
         self.board_text(&moon_kills.to_string(), 0.5, 1.5, "white", 0.7)?; // Kills
         self.board_text(&moon_pieces.to_string(), 1.5, 0.5, "black", 0.7)?; // Pieces
 
+        // Board Show
+        for i in 0..49 {
+            let value = self.board[i];
+
+            if value > 0 {
+                let x = (i % 7) as f64 + 1.0;
+                let y = (i / 7) as f64 + 1.0;
+                let (color, state) = match value {
+                    1..=4 => ("white", value - 1),
+                    5..=8 => ("black", value - 5),
+                    _ => ("", 0),
+                };
+
+                self.piece_draw(x, y, color, state)?;
+            }
+        }
+
         Ok(())
     }
 }

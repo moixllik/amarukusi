@@ -85,6 +85,26 @@ impl Game {
         match event_name.as_str() {
             "pointerdown" => {}
             "pointerup" => match (x, y) {
+                // Piezas en tabblero
+                (1..=7, 1..=7) => {
+                    let player = self.player_active_get()?;
+
+                    if player > 0 {
+                        let state = self.piece_state_get(player)?;
+                        let index = (x - 1) + (y - 1) * 7;
+                        let prev = self.board[index as usize];
+                        let value = match player {
+                            1 if prev <= 5 => 1 + state,
+                            2 if prev == 0 || prev >= 5 => 5 + state,
+                            _ => 0,
+                        };
+
+                        self.board[index as usize] = value;
+
+                        self.notation_save()?;
+                        self.canvas_draw()?;
+                    }
+                }
                 // Cambia de estado a sol.
                 (8, 8) => {
                     let state = self.piece_state_get(1)?;

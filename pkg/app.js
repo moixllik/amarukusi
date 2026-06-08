@@ -76,6 +76,57 @@ export class Game {
         }
     }
     /**
+     * @returns {string}
+     */
+    notation_encode() {
+        let deferred2_0;
+        let deferred2_1;
+        try {
+            const ret = wasm.game_notation_encode(this.__wbg_ptr);
+            var ptr1 = ret[0];
+            var len1 = ret[1];
+            if (ret[3]) {
+                ptr1 = 0; len1 = 0;
+                throw takeFromExternrefTable0(ret[2]);
+            }
+            deferred2_0 = ptr1;
+            deferred2_1 = len1;
+            return getStringFromWasm0(ptr1, len1);
+        } finally {
+            wasm.__wbindgen_free(deferred2_0, deferred2_1, 1);
+        }
+    }
+    /**
+     * @returns {string}
+     */
+    notation_get() {
+        let deferred2_0;
+        let deferred2_1;
+        try {
+            const ret = wasm.game_notation_get(this.__wbg_ptr);
+            var ptr1 = ret[0];
+            var len1 = ret[1];
+            if (ret[3]) {
+                ptr1 = 0; len1 = 0;
+                throw takeFromExternrefTable0(ret[2]);
+            }
+            deferred2_0 = ptr1;
+            deferred2_1 = len1;
+            return getStringFromWasm0(ptr1, len1);
+        } finally {
+            wasm.__wbindgen_free(deferred2_0, deferred2_1, 1);
+        }
+    }
+    notation_load() {
+        wasm.game_notation_load(this.__wbg_ptr);
+    }
+    notation_save() {
+        const ret = wasm.game_notation_save(this.__wbg_ptr);
+        if (ret[1]) {
+            throw takeFromExternrefTable0(ret[0]);
+        }
+    }
+    /**
      * @param {number} x
      * @param {number} y
      * @param {string} color
@@ -297,6 +348,12 @@ function __wbg_get_imports() {
             const ret = arg0.localStorage;
             return isLikeNone(ret) ? 0 : addToExternrefTable0(ret);
         }, arguments); },
+        __wbg_log_eb752234eec406d1: function(arg0) {
+            console.log(arg0);
+        },
+        __wbg_moveTo_11bf5a977e6b8610: function(arg0, arg1, arg2) {
+            arg0.moveTo(arg1, arg2);
+        },
         __wbg_prompt_ae2b909ea3821338: function() { return handleError(function (arg0, arg1, arg2, arg3, arg4, arg5) {
             const ret = arg1.prompt(getStringFromWasm0(arg2, arg3), getStringFromWasm0(arg4, arg5));
             var ptr1 = isLikeNone(ret) ? 0 : passStringToWasm0(ret, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
@@ -347,6 +404,9 @@ function __wbg_get_imports() {
         __wbg_strokeRect_3430a0df4158ba67: function(arg0, arg1, arg2, arg3, arg4) {
             arg0.strokeRect(arg1, arg2, arg3, arg4);
         },
+        __wbg_stroke_82139a335b371e81: function(arg0) {
+            arg0.stroke();
+        },
         __wbg_top_e647a4c02850ada7: function(arg0) {
             const ret = arg0.top;
             return ret;
@@ -364,6 +424,11 @@ function __wbg_get_imports() {
         },
         __wbg_width_e987166926c3367c: function(arg0) {
             const ret = arg0.width;
+            return ret;
+        },
+        __wbindgen_cast_0000000000000001: function(arg0, arg1) {
+            // Cast intrinsic for `Ref(String) -> Externref`.
+            const ret = getStringFromWasm0(arg0, arg1);
             return ret;
         },
         __wbindgen_init_externref_table: function() {
