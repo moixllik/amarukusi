@@ -20,5 +20,6 @@ features = [
   "CanvasRenderingContext2d",
   "CanvasWindingRule",
   "DomRect",
-  "PointerEvent"
+  "PointerEvent",
+  "Storage"
 ]

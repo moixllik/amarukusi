@@ -5,6 +5,7 @@ use web_sys::PointerEvent;
 const CHAKANA: &[i32] = &[
     0, 3, 6, 9, 11, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 37, 39, 42, 45, 48,
 ];
+const MARKS: [&str; 7] = ["A", "B", "C", "D", "E", "F", "G"];
 
 #[wasm_bindgen]
 impl Game {
@@ -22,11 +23,10 @@ impl Game {
             self.board_cell(x, y, color);
         }
 
-        let marks = ["a", "b", "c", "d", "e", "f", "g"];
         let font_color = "#F0d9b5";
         let font_size = 0.15;
 
-        for (i, mark) in marks.iter().enumerate() {
+        for (i, mark) in MARKS.iter().enumerate() {
             let x = i as f64;
             let scale = (i + 1).to_string();
 
@@ -40,7 +40,7 @@ impl Game {
         Ok(())
     }
 
-    fn board_cell(&self, x: f64, y: f64, color: &str) {
+    pub fn board_cell(&self, x: f64, y: f64, color: &str) {
         let size = self.size;
 
         self.context.set_fill_style_str(color);
@@ -49,7 +49,7 @@ impl Game {
         self.context.stroke_rect(size * x, size * y, size, size);
     }
 
-    fn board_text(
+    pub fn board_text(
         &self,
         text: &str,
         x: f64,
@@ -85,18 +85,32 @@ impl Game {
         match event_name.as_str() {
             "pointerdown" => {}
             "pointerup" => match (x, y) {
+                // Cambia de estado a sol.
                 (8, 8) => {
-                    // TODO: state sol
+                    let state = self.piece_state_get(1)?;
+
+                    self.piece_state_set(1, (state + 1) % 4)?;
+
+                    self.canvas_draw()?;
                 }
+
+                // Cambia de estado a luna.
                 (0, 0) => {
-                    // TODO: state luna
+                    let state = self.piece_state_get(2)?;
+
+                    self.piece_state_set(2, (state + 1) % 4)?;
+
+                    self.canvas_draw()?;
                 }
+
                 (8, 4) => {
                     // TODO: active sol
                 }
+
                 (0, 4) => {
                     // TODO: active luna
                 }
+
                 _ => {}
             },
             "pointerleave" => {}
@@ -107,8 +121,7 @@ impl Game {
         Ok(())
     }
 
-    /* TODO:
-     *  - dibujar flecha en el tablero
-     *  - señalar que hay una seleccion de casillas
-     */
+    pub fn board_arrow(&self) {}
+
+    pub fn board_selected(&self) {}
 }

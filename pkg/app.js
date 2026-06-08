@@ -15,8 +15,41 @@ export class Game {
         const ptr = this.__destroy_into_raw();
         wasm.__wbg_game_free(ptr, 0);
     }
+    board_arrow() {
+        wasm.game_board_arrow(this.__wbg_ptr);
+    }
+    /**
+     * @param {number} x
+     * @param {number} y
+     * @param {string} color
+     */
+    board_cell(x, y, color) {
+        const ptr0 = passStringToWasm0(color, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+        const len0 = WASM_VECTOR_LEN;
+        wasm.game_board_cell(this.__wbg_ptr, x, y, ptr0, len0);
+    }
     board_draw() {
         const ret = wasm.game_board_draw(this.__wbg_ptr);
+        if (ret[1]) {
+            throw takeFromExternrefTable0(ret[0]);
+        }
+    }
+    board_selected() {
+        wasm.game_board_selected(this.__wbg_ptr);
+    }
+    /**
+     * @param {string} text
+     * @param {number} x
+     * @param {number} y
+     * @param {string} color
+     * @param {number} text_size
+     */
+    board_text(text, x, y, color, text_size) {
+        const ptr0 = passStringToWasm0(text, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+        const len0 = WASM_VECTOR_LEN;
+        const ptr1 = passStringToWasm0(color, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+        const len1 = WASM_VECTOR_LEN;
+        const ret = wasm.game_board_text(this.__wbg_ptr, ptr0, len0, x, y, ptr1, len1, text_size);
         if (ret[1]) {
             throw takeFromExternrefTable0(ret[0]);
         }
@@ -56,6 +89,43 @@ export class Game {
             throw takeFromExternrefTable0(ret[0]);
         }
     }
+    /**
+     * @param {number} player
+     * @returns {number}
+     */
+    piece_state_get(player) {
+        const ret = wasm.game_piece_state_get(this.__wbg_ptr, player);
+        if (ret[2]) {
+            throw takeFromExternrefTable0(ret[1]);
+        }
+        return ret[0] >>> 0;
+    }
+    /**
+     * @param {number} player
+     * @param {number} state
+     */
+    piece_state_set(player, state) {
+        const ret = wasm.game_piece_state_set(this.__wbg_ptr, player, state);
+        if (ret[1]) {
+            throw takeFromExternrefTable0(ret[0]);
+        }
+    }
+    /**
+     * @param {number} player
+     * @returns {string}
+     */
+    player_name(player) {
+        let deferred1_0;
+        let deferred1_1;
+        try {
+            const ret = wasm.game_player_name(this.__wbg_ptr, player);
+            deferred1_0 = ret[0];
+            deferred1_1 = ret[1];
+            return getStringFromWasm0(ret[0], ret[1]);
+        } finally {
+            wasm.__wbindgen_free(deferred1_0, deferred1_1, 1);
+        }
+    }
 }
 if (Symbol.dispose) Game.prototype[Symbol.dispose] = Game.prototype.free;
 
@@ -75,6 +145,13 @@ export function start() {
 function __wbg_get_imports() {
     const import0 = {
         __proto__: null,
+        __wbg___wbindgen_debug_string_edece8177ad01481: function(arg0, arg1) {
+            const ret = debugString(arg1);
+            const ptr1 = passStringToWasm0(ret, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+            const len1 = WASM_VECTOR_LEN;
+            getDataViewMemory0().setInt32(arg0 + 4 * 1, len1, true);
+            getDataViewMemory0().setInt32(arg0 + 4 * 0, ptr1, true);
+        },
         __wbg___wbindgen_is_undefined_35bb9f4c7fd651d5: function(arg0) {
             const ret = arg0 === undefined;
             return ret;
@@ -118,6 +195,13 @@ function __wbg_get_imports() {
             const ret = arg0.getBoundingClientRect();
             return ret;
         },
+        __wbg_getItem_88cc26174f98c20c: function() { return handleError(function (arg0, arg1, arg2, arg3) {
+            const ret = arg1.getItem(getStringFromWasm0(arg2, arg3));
+            var ptr1 = isLikeNone(ret) ? 0 : passStringToWasm0(ret, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+            var len1 = WASM_VECTOR_LEN;
+            getDataViewMemory0().setInt32(arg0 + 4 * 1, len1, true);
+            getDataViewMemory0().setInt32(arg0 + 4 * 0, ptr1, true);
+        }, arguments); },
         __wbg_height_110f80d27112b6b3: function(arg0) {
             const ret = arg0.height;
             return ret;
@@ -148,6 +232,13 @@ function __wbg_get_imports() {
             const ret = arg0.left;
             return ret;
         },
+        __wbg_localStorage_e3f4a792bb36c514: function() { return handleError(function (arg0) {
+            const ret = arg0.localStorage;
+            return isLikeNone(ret) ? 0 : addToExternrefTable0(ret);
+        }, arguments); },
+        __wbg_setItem_caab843cd6845dbb: function() { return handleError(function (arg0, arg1, arg2, arg3, arg4) {
+            arg0.setItem(getStringFromWasm0(arg1, arg2), getStringFromWasm0(arg3, arg4));
+        }, arguments); },
         __wbg_set_fillStyle_ac68c79af375566e: function(arg0, arg1, arg2) {
             arg0.fillStyle = getStringFromWasm0(arg1, arg2);
         },
@@ -232,6 +323,71 @@ function addToExternrefTable0(obj) {
     const idx = wasm.__externref_table_alloc();
     wasm.__wbindgen_externrefs.set(idx, obj);
     return idx;
+}
+
+function debugString(val) {
+    // primitive types
+    const type = typeof val;
+    if (type == 'number' || type == 'boolean' || val == null) {
+        return  `${val}`;
+    }
+    if (type == 'string') {
+        return `"${val}"`;
+    }
+    if (type == 'symbol') {
+        const description = val.description;
+        if (description == null) {
+            return 'Symbol';
+        } else {
+            return `Symbol(${description})`;
+        }
+    }
+    if (type == 'function') {
+        const name = val.name;
+        if (typeof name == 'string' && name.length > 0) {
+            return `Function(${name})`;
+        } else {
+            return 'Function';
+        }
+    }
+    // objects
+    if (Array.isArray(val)) {
+        const length = val.length;
+        let debug = '[';
+        if (length > 0) {
+            debug += debugString(val[0]);
+        }
+        for(let i = 1; i < length; i++) {
+            debug += ', ' + debugString(val[i]);
+        }
+        debug += ']';
+        return debug;
+    }
+    // Test for built-in
+    const builtInMatches = /\[object ([^\]]+)\]/.exec(toString.call(val));
+    let className;
+    if (builtInMatches && builtInMatches.length > 1) {
+        className = builtInMatches[1];
+    } else {
+        // Failed to match the standard '[object ClassName]'
+        return toString.call(val);
+    }
+    if (className == 'Object') {
+        // we're a user defined class or Object
+        // JSON.stringify avoids problems with cycles, and is generally much
+        // easier than looping through ownProperties of `val`.
+        try {
+            return 'Object(' + JSON.stringify(val) + ')';
+        } catch (_) {
+            return 'Object';
+        }
+    }
+    // errors
+    if (val instanceof Error) {
+        return `${val.name}: ${val.message}\n${val.stack}`;
+    }
+    // TODO we could test for more things here, like `Set`s and `Map`s.
+    return className;
 }
 
 let cachedDataViewMemory0 = null;

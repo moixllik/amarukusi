@@ -21,11 +21,18 @@
                 background-color: gray;
             }
 
-            a {
+            a,
+            button {
                 background-color: white;
                 text-decoration: none;
                 border-radius: 4px;
                 padding: 0.5rem 1.5rem;
+                color: inherit;
+                border: none;
+                cursor: pointer;
+                display: inline-block;
+                font-family: inherit;
+                font-size: inherit;
             }
 
             #canvas {
@@ -43,7 +50,9 @@
         <noscript>Se requiere soporte a JavaScript</noscript>
         <canvas id="canvas"></canvas>
         <p>
-            <a href="./doc/es/laws.pdf">Reglamento de Amarukusi</a>
+            <a href="" onclick="localStorage.clear()">Nuevo</a>
+
+            <a href="./doc/es/laws.pdf">Reglamento</a>
         </p>
         <script type="module">
             import init, * as app from "./pkg/app.js";
