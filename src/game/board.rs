@@ -193,8 +193,4 @@ impl Game {
 
         Ok(())
     }
-
-    pub fn board_arrow(&self) {}
-
-    pub fn board_selected(&self) {}
 }

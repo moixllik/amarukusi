@@ -39,7 +39,7 @@
   #linebreak()
   #chakana()
   #linebreak()
-  _Versión del 22 de mayo del 2026._
+  _Versión del 09 de junio del 2026._
 ]
 
 #outline()
@@ -85,8 +85,8 @@ Se recomienda seguir el reglamento para las partidas no competitivas.
         none
       }
     },
-    ..("a", "b", "c", "d", "e", "f", "g").enumerate().map(((i, letra)) => table.cell(y: 8, x: 7 - i)[#letra]),
-    ..("a", "b", "c", "d", "e", "f", "g").enumerate().map(((i, letra)) => table.cell(x: 1 + i)[#letra]),
+    ..("A", "B", "C", "D", "E", "F", "G").enumerate().map(((i, letra)) => table.cell(y: 8, x: 7 - i)[#letra]),
+    ..("A", "B", "C", "D", "E", "F", "G").enumerate().map(((i, letra)) => table.cell(x: 1 + i)[#letra]),
     ..range(1, 8).map(i => table.cell(y: i)[#i]),
     ..range(1, 8).map(i => table.cell(x: 8, y: 8 - i)[#i]),
     table.cell(x: 0, y: 0)[#circle(radius: 3pt, fill: black)],
@@ -100,7 +100,7 @@ Se recomienda seguir el reglamento para las partidas no competitivas.
 
 2.3. Se considera como primera casilla a la ubicada en la parte inferior más a la derecha desde la perspectiva del jugador, teniendo a los jugadores adversarios ubicados uno frente al otro.
 
-2.4. Las siete hileras horizontales se denominan Marcas, desde "a" hasta "g" para jugador Sol y jugador Luna. Las siete hileras verticales se denominan Escalas, numeradas desde uno hasta siete, desde la primara casilla.
+2.4. Las siete hileras horizontales se denominan Marcas, desde "A" hasta "G" para jugador Sol y jugador Luna. Las siete hileras verticales se denominan Escalas, numeradas desde uno hasta siete, desde la primara casilla.
 
 == Artículo 3. El movimiento de piezas
 
@@ -218,7 +218,7 @@ Se recomienda seguir el reglamento para las partidas no competitivas.
   )
 ]
 
-6.5.2. Para las piezas claras se usa: k) civil, l) estatal a la izquierda, m) militar y n) estatal a la derecha; Las piezas oscuras usa: p) civil, q) estatal a la izquierda, r) militar y s) estatal a la derecha.
+6.5.2. Para las piezas claras se usa: K) civil, L) estatal a la izquierda, M) militar y N) estatal a la derecha; Las piezas oscuras usa: P) civil, Q) estatal a la izquierda, R) militar y S) estatal a la derecha.
 
 6.5.3. Para diferenciar entre hileras de siete casillas se utiliza un separador diferente a espacio (considerar barra invertida "/").
 
@@ -249,7 +249,7 @@ Se recomienda seguir el reglamento para las partidas no competitivas.
       table.cell(x: 1, y: 4, colspan: 3, rowspan: 4, stroke: 1pt)[II],
       table.cell(x: 1, y: 1, colspan: 4, rowspan: 3, stroke: 1pt)[III],
       table.cell(x: 5, y: 1, colspan: 3, rowspan: 4, stroke: 1pt)[IV],
-      ..("a", "b", "c", "d", "e", "f", "g").enumerate().map(((i, letra)) => table.cell(y: 8, x: 7 - i)[#letra]),
+      ..("A", "B", "C", "D", "E", "F", "G").enumerate().map(((i, letra)) => table.cell(y: 8, x: 7 - i)[#letra]),
       ..range(1, 8).map(i => table.cell(x: 8, y: 8 - i)[#i]),
     ),
     [],
@@ -279,7 +279,7 @@ Se recomienda seguir el reglamento para las partidas no competitivas.
 
         return table.cell(x: x + 1, y: y + 1, stroke: 1pt, fill: color)[]
       }),
-      ..("a", "b", "c", "d", "e", "f", "g").enumerate().map(((i, letra)) => table.cell(y: 8, x: 7 - i)[#letra]),
+      ..("A", "B", "C", "D", "E", "F", "G").enumerate().map(((i, letra)) => table.cell(y: 8, x: 7 - i)[#letra]),
       ..range(1, 8).map(i => table.cell(x: 8, y: 8 - i)[#i]),
     ),
 
@@ -296,7 +296,7 @@ Se recomienda seguir el reglamento para las partidas no competitivas.
         let y = calc.rem(i, 7)
         return table.cell(x: x + 1, y: y + 1, fill: gray, stroke: 1pt)[]
       }),
-      ..("a", "b", "c", "d", "e", "f", "g").enumerate().map(((i, letra)) => table.cell(y: 8, x: 7 - i)[#letra]),
+      ..("A", "B", "C", "D", "E", "F", "G").enumerate().map(((i, letra)) => table.cell(y: 8, x: 7 - i)[#letra]),
       ..range(1, 8).map(i => table.cell(x: 8, y: 8 - i)[#i]),
     ),
 
@@ -306,31 +306,31 @@ Se recomienda seguir el reglamento para las partidas no competitivas.
 
 7.1. Desde la perspectiva del jugador Sol, el tablero tiene 4 sectores de 12 casillas y un sector de una casilla.
 
-7.1.1. Primer sector, desde "a1" hasta "d3".
+7.1.1. Primer sector, desde "A1" hasta "D3".
 
-7.1.2. Segundo sector, desde "e1" hasta "g4".
+7.1.2. Segundo sector, desde "E1" hasta "G4".
 
-7.1.3. Tercer sector, desde "g5" hasta "d7".
+7.1.3. Tercer sector, desde "G5" hasta "D7".
 
-7.1.4. Cuarto sector, desde "c7" hasta "a4".
+7.1.4. Cuarto sector, desde "C7" hasta "A4".
 
-7.1.5. Sector de gobierno es en "d4".
+7.1.5. Sector de gobierno es en "D4".
 
 7.2. Las casillas en el perímetro del tablero se le conoce como frontera.
 
-7.2.1. Las casillas en las esquinas (a1, a7, g1 y g7) representan al territorio exterior o islas.
+7.2.1. Las casillas en las esquinas (A1, A7, G1 y G7) representan al territorio exterior o islas.
 
-7.2.2. Las otras casillas representan a la frontera, salvo las que pertenecen al continente (a4, d1, d7 y g4).
+7.2.2. Las otras casillas representan a la frontera, salvo las que pertenecen al continente (A4, D1, D7 y G4).
 
 7.3. Casillas del territorio continental.
 
-7.3.1. Casilla del cielo: d4.
+7.3.1. Casilla del cielo: D4.
 
-7.3.2. Casillas de la costa, oscuras: a4, d1, d7 y g4.
+7.3.2. Casillas de la costa, oscuras: A4, D1, D7 y G4.
 
-7.3.3. Casillas de la selva, oscuras: b3, b5, c2, c6, e2, e6, f3 y f5; claras: b4, d2, d6 y f4.
+7.3.3. Casillas de la selva, oscuras: B3, B5, C2, C6, E2, E6, F3 y F5; claras: B4, D2, D6 y F4.
 
-7.3.4. Casillas de la sierra, oscuras: c4, d3, d5 y e4; claras: c3, c5, e3 y e5.
+7.3.4. Casillas de la sierra, oscuras: C4, D3, D5 y E4; claras: C3, C5, E3 y E5.
 
 7.4. Las casillas que no son territorio representan al océano.
 

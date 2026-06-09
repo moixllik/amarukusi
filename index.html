@@ -52,6 +52,16 @@
         <p>
             <a href="" onclick="localStorage.clear()">Nuevo</a>
 
+            <button
+                onclick="
+                    game.notation_set(prompt('Notación') ?? '');
+                    game.notation_save();
+                "
+            >
+                Cargar
+            </button>
+            <button onclick="alert(game.notation_get())">Notación</button>
+
             <a href="./doc/es/laws.pdf">Reglamento</a>
         </p>
         <script type="module">
@@ -59,7 +69,7 @@
             await init();
 
             const canvas = document.getElementById("canvas");
-            const game = app.new_game(canvas, canvas.getContext("2d"));
+            window.game = app.new_game(canvas, canvas.getContext("2d"));
 
             window.addEventListener("resize", () => game.canvas_resize());
 
@@ -78,6 +88,7 @@
             );
 
             game.canvas_resize();
+            game.notation_load();
         </script>
     </body>
 </html>

@@ -15,9 +15,6 @@ export class Game {
         const ptr = this.__destroy_into_raw();
         wasm.__wbg_game_free(ptr, 0);
     }
-    board_arrow() {
-        wasm.game_board_arrow(this.__wbg_ptr);
-    }
     /**
      * @param {number} x
      * @param {number} y
@@ -33,9 +30,6 @@ export class Game {
         if (ret[1]) {
             throw takeFromExternrefTable0(ret[0]);
         }
-    }
-    board_selected() {
-        wasm.game_board_selected(this.__wbg_ptr);
     }
     /**
      * @param {string} text
@@ -71,6 +65,17 @@ export class Game {
     }
     canvas_resize() {
         const ret = wasm.game_canvas_resize(this.__wbg_ptr);
+        if (ret[1]) {
+            throw takeFromExternrefTable0(ret[0]);
+        }
+    }
+    /**
+     * @param {string} content
+     */
+    notation_decode(content) {
+        const ptr0 = passStringToWasm0(content, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+        const len0 = WASM_VECTOR_LEN;
+        const ret = wasm.game_notation_decode(this.__wbg_ptr, ptr0, len0);
         if (ret[1]) {
             throw takeFromExternrefTable0(ret[0]);
         }
@@ -118,10 +123,24 @@ export class Game {
         }
     }
     notation_load() {
-        wasm.game_notation_load(this.__wbg_ptr);
+        const ret = wasm.game_notation_load(this.__wbg_ptr);
+        if (ret[1]) {
+            throw takeFromExternrefTable0(ret[0]);
+        }
     }
     notation_save() {
         const ret = wasm.game_notation_save(this.__wbg_ptr);
+        if (ret[1]) {
+            throw takeFromExternrefTable0(ret[0]);
+        }
+    }
+    /**
+     * @param {string} notation
+     */
+    notation_set(notation) {
+        const ptr0 = passStringToWasm0(notation, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+        const len0 = WASM_VECTOR_LEN;
+        const ret = wasm.game_notation_set(this.__wbg_ptr, ptr0, len0);
         if (ret[1]) {
             throw takeFromExternrefTable0(ret[0]);
         }
@@ -348,9 +367,6 @@ function __wbg_get_imports() {
             const ret = arg0.localStorage;
             return isLikeNone(ret) ? 0 : addToExternrefTable0(ret);
         }, arguments); },
-        __wbg_log_eb752234eec406d1: function(arg0) {
-            console.log(arg0);
-        },
         __wbg_moveTo_11bf5a977e6b8610: function(arg0, arg1, arg2) {
             arg0.moveTo(arg1, arg2);
         },
