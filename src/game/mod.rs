@@ -14,6 +14,7 @@ pub struct Game {
     size: f64,
     storage: Storage,
     board: [usize; 49],
+    selected: (usize, usize),
 }
 
 #[wasm_bindgen]
@@ -30,5 +31,6 @@ pub fn new_game(canvas: HtmlCanvasElement, context: CanvasRenderingContext2d) ->
         size: 0.0,
         storage,
         board: [0; 49],
+        selected: (0, 0),
     }
 }

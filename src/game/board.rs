@@ -84,110 +84,116 @@ impl Game {
 
         match event_name.as_str() {
             "pointerdown" => {}
-            "pointerup" => match (x, y) {
-                // Piezas en tabblero
-                (1..=7, 1..=7) => {
-                    let player = self.player_active_get()?;
+            "pointerup" => {
+                match (x, y) {
+                    // Piezas en tabblero
+                    (1..=7, 1..=7) => {
+                        let player = self.player_active_get()?;
 
-                    if player > 0 {
-                        let state = self.piece_state_get(player)?;
-                        let index = (x - 1) + (y - 1) * 7;
-                        let prev = self.board[index as usize];
-                        let value = match player {
-                            1 if prev <= 5 => 1 + state,
-                            2 if prev == 0 || prev >= 5 => 5 + state,
-                            _ => 0,
-                        };
+                        if player > 0 {
+                            let state = self.piece_state_get(player)?;
+                            let index = (x - 1) + (y - 1) * 7;
+                            let prev = self.board[index as usize];
+                            let value = match player {
+                                1 if prev <= 5 => 1 + state,
+                                2 if prev == 0 || prev >= 5 => 5 + state,
+                                _ => 0,
+                            };
 
-                        self.board[index as usize] = value;
+                            self.board[index as usize] = value;
 
-                        self.notation_save()?;
-                        self.canvas_draw()?;
+                            self.notation_save()?;
+                            self.canvas_draw()?;
+                        }
                     }
-                }
-                // Cambia de estado a sol.
-                (8, 8) => {
-                    let state = self.piece_state_get(1)?;
+                    // Cambia de estado a sol.
+                    (8, 8) => {
+                        let state = self.piece_state_get(1)?;
 
-                    self.piece_state_set(1, (state + 1) % 4)?;
-
-                    self.canvas_draw()?;
-                }
-
-                // Cambia de estado a luna.
-                (0, 0) => {
-                    let state = self.piece_state_get(2)?;
-
-                    self.piece_state_set(2, (state + 1) % 4)?;
-
-                    self.canvas_draw()?;
-                }
-
-                // Activar como jugador sol
-                (4, 8) => {
-                    self.player_active_set(1)?;
-
-                    self.canvas_draw()?;
-                }
-
-                // Activar como jugador luna
-                (4, 0) => {
-                    self.player_active_set(2)?;
-
-                    self.canvas_draw()?;
-                }
-
-                // Cambiar número de piezas sol
-                (7, 8) => {
-                    if let Some(pieces) = web_sys::window()
-                        .unwrap()
-                        .prompt_with_message_and_default("Piezas", "")?
-                    {
-                        self.player_pieces_set(1, pieces.parse().unwrap_or(7))?;
+                        self.piece_state_set(1, (state + 1) % 4)?;
 
                         self.canvas_draw()?;
                     }
-                }
 
-                // Cambiar número de piezas luna
-                (1, 0) => {
-                    if let Some(pieces) = web_sys::window()
-                        .unwrap()
-                        .prompt_with_message_and_default("Piezas", "")?
-                    {
-                        self.player_pieces_set(2, pieces.parse().unwrap_or(7))?;
+                    // Cambia de estado a luna.
+                    (0, 0) => {
+                        let state = self.piece_state_get(2)?;
+
+                        self.piece_state_set(2, (state + 1) % 4)?;
 
                         self.canvas_draw()?;
                     }
-                }
 
-                // Cambiar número de muertes sol
-                (8, 7) => {
-                    if let Some(kills) = web_sys::window()
-                        .unwrap()
-                        .prompt_with_message_and_default("Muertes", "")?
-                    {
-                        self.player_kills_set(1, kills.parse().unwrap_or(0))?;
+                    // Activar como jugador sol
+                    (4, 8) => {
+                        self.player_active_set(1)?;
 
                         self.canvas_draw()?;
                     }
-                }
 
-                // Cambiar número de muertes luna
-                (0, 1) => {
-                    if let Some(kills) = web_sys::window()
-                        .unwrap()
-                        .prompt_with_message_and_default("Muertes", "")?
-                    {
-                        self.player_kills_set(2, kills.parse().unwrap_or(0))?;
+                    // Activar como jugador luna
+                    (4, 0) => {
+                        self.player_active_set(2)?;
 
                         self.canvas_draw()?;
                     }
-                }
-                _ => {}
-            },
+
+                    // Cambiar número de piezas sol
+                    (7, 8) => {
+                        if let Some(pieces) = web_sys::window()
+                            .unwrap()
+                            .prompt_with_message_and_default("Piezas", "")?
+                        {
+                            self.player_pieces_set(1, pieces.parse().unwrap_or(7))?;
+
+                            self.canvas_draw()?;
+                        }
+                    }
+
+                    // Cambiar número de piezas luna
+                    (1, 0) => {
+                        if let Some(pieces) = web_sys::window()
+                            .unwrap()
+                            .prompt_with_message_and_default("Piezas", "")?
+                        {
+                            self.player_pieces_set(2, pieces.parse().unwrap_or(7))?;
+
+                            self.canvas_draw()?;
+                        }
+                    }
+
+                    // Cambiar número de muertes sol
+                    (8, 7) => {
+                        if let Some(kills) = web_sys::window()
+                            .unwrap()
+                            .prompt_with_message_and_default("Muertes", "")?
+                        {
+                            self.player_kills_set(1, kills.parse().unwrap_or(0))?;
+
+                            self.canvas_draw()?;
+                        }
+                    }
+
+                    // Cambiar número de muertes luna
+                    (0, 1) => {
+                        if let Some(kills) = web_sys::window()
+                            .unwrap()
+                            .prompt_with_message_and_default("Muertes", "")?
+                        {
+                            self.player_kills_set(2, kills.parse().unwrap_or(0))?;
+
+                            self.canvas_draw()?;
+                        }
+                    }
+                    _ => {}
+                };
+            }
             "pointerleave" => {}
-            "pointermove" => {}
+            "pointermove" => {
+                self.selected = (x as usize, y as usize);
+
+                self.canvas_draw()?;
+            }
             _ => {}
         }
 

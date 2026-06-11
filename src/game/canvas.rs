@@ -27,6 +27,14 @@ impl Game {
         // Board
         self.board_draw()?;
 
+        // Selected
+        let (x, y) = (self.selected.0 as f64, self.selected.1 as f64);
+        if x > 0.0 && x < 8.0 && y > 0.0 && y < 8.0 {
+            self.context.set_fill_style_str("cyan");
+            self.context
+                .fill_rect(x * self.size, y * self.size, self.size, self.size);
+        }
+
         // Player
         let player = self.player_active_get()?;
 
